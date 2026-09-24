@@ -9,6 +9,7 @@ import {
 } from '../actions/auth';
 import axios, { AxiosError } from 'axios';
 import { getApps, getCategories } from '.';
+import i18n from '../../i18n';
 
 export const login =
   (formData: { password: string; duration: string }) =>
@@ -74,7 +75,7 @@ export const authError =
       dispatch<any>({
         type: ActionType.createNotification,
         payload: {
-          title: 'Error',
+          title: i18n.t('common.error'),
           message: apiError.response?.data.error,
         },
       });

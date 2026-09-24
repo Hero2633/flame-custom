@@ -13,6 +13,7 @@ import {
 } from '../actions/app';
 import axios from 'axios';
 import { applyAuth } from '../../utility';
+import i18n from '../../i18n';
 
 export const getApps =
   () => async (dispatch: Dispatch<GetAppsAction<undefined | App[]>>) => {
@@ -49,15 +50,15 @@ export const pinApp =
         }
       );
 
-      const status = isPinned
-        ? 'unpinned from Homescreen'
-        : 'pinned to Homescreen';
+      const statusText = isPinned
+        ? i18n.t('apps.unpinSuccess')
+        : i18n.t('apps.pinSuccess');
 
       dispatch<any>({
         type: ActionType.createNotification,
         payload: {
-          title: 'Success',
-          message: `App ${name} ${status}`,
+          title: i18n.t('common.success'),
+          message: `${name}: ${statusText}`,
         },
       });
 
@@ -80,8 +81,8 @@ export const addApp =
       dispatch<any>({
         type: ActionType.createNotification,
         payload: {
-          title: 'Success',
-          message: `App added`,
+          title: i18n.t('common.success'),
+          message: i18n.t('apps.appAdded'),
         },
       });
 
@@ -107,8 +108,8 @@ export const deleteApp =
       dispatch<any>({
         type: ActionType.createNotification,
         payload: {
-          title: 'Success',
-          message: 'App deleted',
+          title: i18n.t('common.success'),
+          message: i18n.t('apps.appDeleted'),
         },
       });
 
@@ -136,8 +137,8 @@ export const updateApp =
       dispatch<any>({
         type: ActionType.createNotification,
         payload: {
-          title: 'Success',
-          message: `App updated`,
+          title: i18n.t('common.success'),
+          message: i18n.t('apps.appUpdated'),
         },
       });
 

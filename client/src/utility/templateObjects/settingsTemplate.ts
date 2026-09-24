@@ -20,6 +20,7 @@ export const uiSettingsTemplate: UISettingsForm = {
   hideDate: false,
   hideSearch: false,
   disableAutofocus: false,
+  fontScale: '1.15',
 };
 
 export const weatherSettingsTemplate: WeatherForm = {

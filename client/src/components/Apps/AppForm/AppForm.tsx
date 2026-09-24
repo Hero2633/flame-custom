@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent, SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { NewApp } from '../../../interfaces';
 
 import classes from './AppForm.module.css';
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export const AppForm = ({ modalHandler }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const { appInUpdate } = useSelector((state: State) => state.apps);
 
   const dispatch = useDispatch();
@@ -59,8 +61,8 @@ export const AppForm = ({ modalHandler }: Props): JSX.Element => {
     for (let field of ['name', 'url', 'icon'] as const) {
       if (/^ +$/.test(formData[field])) {
         createNotification({
-          title: 'Error',
-          message: `Field cannot be empty: ${field}`,
+          title: t('common.error'),
+          message: t('apps.fieldEmptyError', { field }),
         });
 
         return;
@@ -107,7 +109,7 @@ export const AppForm = ({ modalHandler }: Props): JSX.Element => {
     <ModalForm modalHandler={modalHandler} formHandler={formSubmitHandler}>
       {/* NAME */}
       <InputGroup>
-        <label htmlFor="name">App name</label>
+        <label htmlFor="name">{t('apps.appName')}</label>
         <input
           type="text"
           name="name"
@@ -121,7 +123,7 @@ export const AppForm = ({ modalHandler }: Props): JSX.Element => {
 
       {/* URL */}
       <InputGroup>
-        <label htmlFor="url">App URL</label>
+        <label htmlFor="url">{t('apps.appUrl')}</label>
         <input
           type="text"
           name="url"
@@ -135,17 +137,17 @@ export const AppForm = ({ modalHandler }: Props): JSX.Element => {
 
       {/* DESCRIPTION */}
       <InputGroup>
-        <label htmlFor="description">App description</label>
+        <label htmlFor="description">{t('apps.appDescription')}</label>
         <input
           type="text"
           name="description"
           id="description"
-          placeholder="My self-hosted app"
+          placeholder={t('apps.descriptionHint')}
           value={formData.description}
           onChange={(e) => inputChangeHandler(e)}
         />
         <span>
-          Optional - If description is not set, app URL will be displayed
+          {t('apps.descriptionHint')}
         </span>
       </InputGroup>
 
@@ -153,7 +155,7 @@ export const AppForm = ({ modalHandler }: Props): JSX.Element => {
       {!useCustomIcon ? (
         // use mdi icon
         <InputGroup>
-          <label htmlFor="icon">App icon</label>
+          <label htmlFor="icon">{t('apps.appIcon')}</label>
           <input
             type="text"
             name="icon"
@@ -164,23 +166,23 @@ export const AppForm = ({ modalHandler }: Props): JSX.Element => {
             onChange={(e) => inputChangeHandler(e)}
           />
           <span>
-            Use icon name from MDI or pass a valid URL.
+            {t('apps.iconReference')}
             <a href="https://pictogrammers.com/library/mdi/" target="blank">
               {' '}
-              Click here for reference
+              {t('apps.clickReference')}
             </a>
           </span>
           <span
             onClick={() => toggleUseCustomIcon(!useCustomIcon)}
             className={classes.Switch}
           >
-            Switch to custom icon upload
+            {t('apps.switchToUpload')}
           </span>
         </InputGroup>
       ) : (
         // upload custom icon
         <InputGroup>
-          <label htmlFor="icon">App Icon</label>
+          <label htmlFor="icon">{t('apps.appIcon')}</label>
           <input
             type="file"
             name="icon"
@@ -196,29 +198,29 @@ export const AppForm = ({ modalHandler }: Props): JSX.Element => {
             }}
             className={classes.Switch}
           >
-            Switch to MDI
+            {t('apps.switchToMDI')}
           </span>
         </InputGroup>
       )}
 
       {/* VISIBILITY */}
       <InputGroup>
-        <label htmlFor="isPublic">App visibility</label>
+        <label htmlFor="isPublic">{t('apps.appVisibility')}</label>
         <select
           id="isPublic"
           name="isPublic"
           value={formData.isPublic ? 1 : 0}
           onChange={(e) => inputChangeHandler(e, { isBool: true })}
         >
-          <option value={1}>Visible (anyone can access it)</option>
-          <option value={0}>Hidden (authentication required)</option>
+          <option value={1}>{t('apps.publicOption')}</option>
+          <option value={0}>{t('apps.privateOption')}</option>
         </select>
       </InputGroup>
 
       {!appInUpdate ? (
-        <Button>Add new application</Button>
+        <Button>{t('apps.addNew')}</Button>
       ) : (
-        <Button>Update application</Button>
+        <Button>{t('apps.updateAppBtn')}</Button>
       )}
     </ModalForm>
   );

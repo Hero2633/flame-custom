@@ -1,4 +1,5 @@
 import { NavLink, Link, Switch, Route } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useSelector } from 'react-redux';
@@ -27,6 +28,7 @@ import { Container, Headline } from '../UI';
 import clientRoutes from './settings.json';
 
 export const Settings = (): JSX.Element => {
+  const { t } = useTranslation();
   const routes = clientRoutes.routes;
 
   const { isAuthenticated } = useSelector((state: State) => state.auth);
@@ -35,7 +37,10 @@ export const Settings = (): JSX.Element => {
 
   return (
     <Container>
-      <Headline title="Settings" subtitle={<Link to="/">Go back</Link>} />
+      <Headline
+        title={t('settings.title')}
+        subtitle={<Link to="/">{t('common.goBack')}</Link>}
+      />
       <div className={classes.Settings}>
         {/* NAVIGATION MENU */}
         <nav className={classes.SettingsNav}>
@@ -47,7 +52,7 @@ export const Settings = (): JSX.Element => {
               to={dest}
               key={idx}
             >
-              {name}
+              {t(`settings.nav.${name.toLowerCase()}`) || name}
             </NavLink>
           ))}
         </nav>

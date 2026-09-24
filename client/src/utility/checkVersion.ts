@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { store } from '../store/store';
 import { createNotification } from '../store/action-creators';
+import i18n from '../i18n';
 
 export const checkVersion = async (isForced: boolean = false) => {
   try {
@@ -15,16 +16,16 @@ export const checkVersion = async (isForced: boolean = false) => {
     if (githubVersion !== process.env.REACT_APP_VERSION) {
       store.dispatch<any>(
         createNotification({
-          title: 'Info',
-          message: 'New version is available!',
+          title: i18n.t('common.info'),
+          message: i18n.t('settings.auth.newVersionAvailable'),
           url: 'https://github.com/pawelmalak/flame/blob/master/CHANGELOG.md',
         })
       );
     } else if (isForced) {
       store.dispatch<any>(
         createNotification({
-          title: 'Info',
-          message: 'You are using the latest version!',
+          title: i18n.t('common.info'),
+          message: i18n.t('settings.auth.latestVersion'),
         })
       );
     }

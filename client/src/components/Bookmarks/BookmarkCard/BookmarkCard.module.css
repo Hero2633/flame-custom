@@ -4,14 +4,30 @@
 
 .BookmarkCard h3 {
   color: var(--color-accent);
-  margin-bottom: 10px;
-  font-size: 16px;
-  font-weight: 400;
+  margin-bottom: 12px;
+  font-size: calc(22px * var(--font-scale, 1.15));
+  font-weight: 700;
   text-transform: uppercase;
 }
 
-.BookmarkHeader:hover {
+.BookmarkHeader {
+  display: inline-block;
   cursor: pointer;
+  transform-origin: left center;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.BookmarkHeader:hover {
+  text-decoration: underline;
+  transform: scale(0.95);
+}
+
+.BookmarkHeader:active {
+  transform: scale(0.92);
 }
 
 .Bookmarks {
@@ -20,7 +36,7 @@
 }
 
 .Bookmarks a {
-  line-height: 2;
+  line-height: 2.1;
   transition: all 0.25s;
   display: flex;
 }
@@ -31,18 +47,18 @@
 }
 
 .BookmarkIcon {
-  width: 20px;
-  height: 20px;
+  width: calc(20px * var(--font-scale, 1.15));
+  height: calc(20px * var(--font-scale, 1.15));
   display: flex;
-  margin-top: 3px;
-  margin-right: 2px;
+  margin-top: 5px;
+  margin-right: 4px;
   justify-content: center;
   align-items: center;
 }
 
 .BookmarkIconSvg {
-  width: 80%;
-  height: 80%;
+  width: 85%;
+  height: 85%;
   margin-top: 2px;
   margin-left: 2px;
   object-fit: contain;

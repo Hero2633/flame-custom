@@ -6,6 +6,7 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,6 +26,7 @@ interface Props {
 }
 
 export const CategoryTable = ({ openFormForUpdating }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const {
     config: { config },
     bookmarks: { categories },
@@ -50,8 +52,8 @@ export const CategoryTable = ({ openFormForUpdating }: Props): JSX.Element => {
   const dragEndHanlder = (result: DropResult): void => {
     if (config.useOrdering !== 'orderId') {
       createNotification({
-        title: 'Error',
-        message: 'Custom order is disabled',
+        title: t('common.error'),
+        message: t('bookmarks.customOrderDisabled'),
       });
       return;
     }
@@ -71,7 +73,7 @@ export const CategoryTable = ({ openFormForUpdating }: Props): JSX.Element => {
   // Action handlers
   const deleteCategoryHandler = (id: number, name: string) => {
     const proceed = window.confirm(
-      `Are you sure you want to delete ${name}? It will delete ALL assigned bookmarks`
+      t('bookmarks.deleteCategoryConfirm', { name })
     );
 
     if (proceed) {
@@ -98,11 +100,11 @@ export const CategoryTable = ({ openFormForUpdating }: Props): JSX.Element => {
     <Fragment>
       <Message isPrimary={false}>
         {config.useOrdering === 'orderId' ? (
-          <p>You can drag and drop single rows to reorder categories</p>
+          <p>{t('bookmarks.reorderTip')}</p>
         ) : (
           <p>
-            Custom order is disabled. You can change it in the{' '}
-            <Link to="/settings/general">settings</Link>
+            {t('bookmarks.customOrderDisabled')}{' '}
+            <Link to="/settings/general">{t('settings.title')}</Link>
           </p>
         )}
       </Message>
@@ -111,7 +113,11 @@ export const CategoryTable = ({ openFormForUpdating }: Props): JSX.Element => {
         <Droppable droppableId="categories">
           {(provided) => (
             <Table
-              headers={['Name', 'Visibility', 'Actions']}
+              headers={[
+                t('common.name'),
+                t('common.visibility'),
+                t('common.actions'),
+              ]}
               innerRef={provided.innerRef}
             >
               {localCategories.map((category, index): JSX.Element => {
@@ -139,7 +145,9 @@ export const CategoryTable = ({ openFormForUpdating }: Props): JSX.Element => {
                         >
                           <td style={{ width: '300px' }}>{category.name}</td>
                           <td style={{ width: '300px' }}>
-                            {category.isPublic ? 'Visible' : 'Hidden'}
+                            {category.isPublic
+                              ? t('common.visible')
+                              : t('common.hidden')}
                           </td>
 
                           {!snapshot.isDragging && (

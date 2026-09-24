@@ -24,8 +24,10 @@ import { Header } from './Header/Header';
 
 // Utils
 import { escapeRegex } from '../../utility';
+import { useTranslation } from 'react-i18next';
 
 export const Home = (): JSX.Element => {
+  const { t } = useTranslation();
   const {
     apps: { apps, loading: appsLoading },
     bookmarks: { categories, loading: bookmarksLoading },
@@ -116,7 +118,7 @@ export const Home = (): JSX.Element => {
 
       {!config.hideApps && (isAuthenticated || apps.some((a) => a.isPinned)) ? (
         <Fragment>
-          <SectionHeadline title="Applications" link="/applications" />
+          <SectionHeadline title={t('apps.headline')} link="/applications" />
           {appsLoading ? (
             <Spinner />
           ) : (
@@ -139,7 +141,7 @@ export const Home = (): JSX.Element => {
       {!config.hideCategories &&
       (isAuthenticated || categories.some((c) => c.isPinned)) ? (
         <Fragment>
-          <SectionHeadline title="Bookmarks" link="/bookmarks" />
+          <SectionHeadline title={t('bookmarks.headline')} link="/bookmarks" />
           {bookmarksLoading ? (
             <Spinner />
           ) : (

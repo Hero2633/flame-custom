@@ -1,5 +1,6 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useDispatch } from 'react-redux';
@@ -14,6 +15,7 @@ import { InputGroup, Button } from '../../UI';
 import { applyAuth } from '../../../utility';
 
 export const StyleSettings = (): JSX.Element => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { createNotification } = bindActionCreators(actionCreators, dispatch);
 
@@ -42,8 +44,8 @@ export const StyleSettings = (): JSX.Element => {
       )
       .then(() => {
         createNotification({
-          title: 'Success',
-          message: 'CSS saved. Reload page to see changes',
+          title: t('common.success'),
+          message: t('settings.css.cssSaved'),
         });
       })
       .catch((err) => console.log(err.response));
@@ -52,16 +54,17 @@ export const StyleSettings = (): JSX.Element => {
   return (
     <form onSubmit={(e) => formSubmitHandler(e)}>
       <InputGroup>
-        <label htmlFor="customStyles">Custom CSS</label>
+        <label htmlFor="customStyles">{t('settings.css.headline')}</label>
         <textarea
           id="customStyles"
           name="customStyles"
+          placeholder={t('settings.css.placeholder')}
           value={customStyles}
           onChange={(e) => inputChangeHandler(e)}
           spellCheck={false}
         ></textarea>
       </InputGroup>
-      <Button>Save CSS</Button>
+      <Button>{t('settings.css.saveCss')}</Button>
     </form>
   );
 };

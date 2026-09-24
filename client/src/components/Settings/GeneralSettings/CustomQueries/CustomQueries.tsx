@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +17,7 @@ import { Modal, Icon, Button, CompactTable, ActionIcons } from '../../../UI';
 import { QueriesForm } from './QueriesForm';
 
 export const CustomQueries = (): JSX.Element => {
+  const { t } = useTranslation();
   const { customQueries, config } = useSelector((state: State) => state.config);
 
   const dispatch = useDispatch();
@@ -38,11 +40,11 @@ export const CustomQueries = (): JSX.Element => {
 
     if (isCurrent) {
       createNotification({
-        title: 'Error',
-        message: 'Cannot delete active provider',
+        title: t('common.error'),
+        message: t('search.cannotDeleteActive'),
       });
     } else if (
-      window.confirm(`Are you sure you want to delete this provider?`)
+      window.confirm(t('common.delete') + '?')
     ) {
       deleteQuery(query.prefix);
     }
@@ -66,7 +68,7 @@ export const CustomQueries = (): JSX.Element => {
 
       <section>
         {customQueries.length ? (
-          <CompactTable headers={['Name', 'Prefix', 'Actions']}>
+          <CompactTable headers={[t('common.name'), t('search.prefix'), t('common.actions')]}>
             {customQueries.map((q: Query, idx) => (
               <Fragment key={idx}>
                 <span>{q.name}</span>
@@ -92,7 +94,7 @@ export const CustomQueries = (): JSX.Element => {
             setModalIsOpen(true);
           }}
         >
-          Add new search provider
+          {t('search.addQuery')}
         </Button>
       </section>
     </Fragment>

@@ -1,30 +1,20 @@
 import { parseTime } from '../../../../utility';
+import i18n from '../../../../i18n';
 
 export const getDateTime = (): string => {
-  const days = localStorage.getItem('daySchema')?.split(';') || [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
+  const isEn = (i18n.language || 'zh').startsWith('en');
+
+  const defaultDaysZh = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+  const defaultDaysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  const defaultMonthsZh = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+  const defaultMonthsEn = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
   ];
 
-  const months = localStorage.getItem('monthSchema')?.split(';') || [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+  const days = localStorage.getItem('daySchema')?.split(';') || (isEn ? defaultDaysEn : defaultDaysZh);
+  const months = localStorage.getItem('monthSchema')?.split(';') || (isEn ? defaultMonthsEn : defaultMonthsZh);
 
   const now = new Date();
 
@@ -36,7 +26,9 @@ export const getDateTime = (): string => {
   let dateEl = '';
 
   if (!hideDate) {
-    if (!useAmericanDate) {
+    if (!isEn && !localStorage.getItem('daySchema')) {
+      dateEl = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 ${days[now.getDay()]}`;
+    } else if (!useAmericanDate) {
       dateEl = `${days[now.getDay()]}, ${now.getDate()} ${
         months[now.getMonth()]
       } ${now.getFullYear()}`;

@@ -1,0 +1,17 @@
+services:
+  flame:
+    image: flame:latest
+    container_name: flame
+    # 本地优先拉取策略：本地存在 flame:latest 镜像时优先使用本地镜像，仅当本地不存在时才从远端拉取
+    pull_policy: missing
+    environment:
+      # 登录密码：优先读取环境变量 PASSWORD，未设置时默认使用 wnt8000LLy&y
+      - PASSWORD=${PASSWORD:-wnt8000LLy&y}
+    volumes:
+      # 数据持久化目录：挂载项目实际的 ./data 目录到容器内 /app/data，保存配置、SQLite数据库、图标及主题等
+      - ./data:/app/data
+      # 可选：如果需要 Flame 自动发现和集成宿主机上的 Docker 容器应用，可取消下行注释
+      # - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - "5005:5005"
+    restart: unless-stopped

@@ -1,6 +1,7 @@
 // React
 import { useState, useEffect, FormEvent, ChangeEvent, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 // Typescript
 import { Query, GeneralForm } from '../../../interfaces';
@@ -23,6 +24,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../../../store';
 
 export const GeneralSettings = (): JSX.Element => {
+  const { t } = useTranslation();
   const {
     config: { loading, customQueries, config },
     bookmarks: { categories },
@@ -84,28 +86,28 @@ export const GeneralSettings = (): JSX.Element => {
         style={{ marginBottom: '30px' }}
       >
         {/* === GENERAL OPTIONS === */}
-        <SettingsHeadline text="General" />
+        <SettingsHeadline text={t('settings.general.headline')} />
         {/* SORT TYPE */}
         <InputGroup>
-          <label htmlFor="useOrdering">Sorting type</label>
+          <label htmlFor="useOrdering">{t('settings.general.sortingType')}</label>
           <select
             id="useOrdering"
             name="useOrdering"
             value={formData.useOrdering}
             onChange={(e) => inputChangeHandler(e)}
           >
-            <option value="createdAt">By creation date</option>
-            <option value="name">Alphabetical order</option>
-            <option value="orderId">Custom order</option>
+            <option value="createdAt">{t('settings.general.byCreationDate')}</option>
+            <option value="name">{t('settings.general.alphabeticalOrder')}</option>
+            <option value="orderId">{t('settings.general.customOrder')}</option>
           </select>
         </InputGroup>
 
         {/* === APPS OPTIONS === */}
-        <SettingsHeadline text="Apps" />
+        <SettingsHeadline text={t('settings.general.appsHeadline')} />
         {/* PIN APPS */}
         <InputGroup>
           <label htmlFor="pinAppsByDefault">
-            Pin new applications by default
+            {t('settings.general.pinAppsByDefault')}
           </label>
           <select
             id="pinAppsByDefault"
@@ -113,31 +115,31 @@ export const GeneralSettings = (): JSX.Element => {
             value={formData.pinAppsByDefault ? 1 : 0}
             onChange={(e) => inputChangeHandler(e, { isBool: true })}
           >
-            <option value={1}>True</option>
-            <option value={0}>False</option>
+            <option value={1}>{t('common.true')}</option>
+            <option value={0}>{t('common.false')}</option>
           </select>
         </InputGroup>
 
         {/* APPS OPPENING */}
         <InputGroup>
-          <label htmlFor="appsSameTab">Open applications in the same tab</label>
+          <label htmlFor="appsSameTab">{t('settings.general.appsSameTab')}</label>
           <select
             id="appsSameTab"
             name="appsSameTab"
             value={formData.appsSameTab ? 1 : 0}
             onChange={(e) => inputChangeHandler(e, { isBool: true })}
           >
-            <option value={1}>True</option>
-            <option value={0}>False</option>
+            <option value={1}>{t('common.true')}</option>
+            <option value={0}>{t('common.false')}</option>
           </select>
         </InputGroup>
 
         {/* === BOOKMARKS OPTIONS === */}
-        <SettingsHeadline text="Bookmarks" />
+        <SettingsHeadline text={t('settings.general.bookmarksHeadline')} />
         {/* PIN CATEGORIES */}
         <InputGroup>
           <label htmlFor="pinCategoriesByDefault">
-            Pin new categories by default
+            {t('settings.general.pinCategoriesByDefault')}
           </label>
           <select
             id="pinCategoriesByDefault"
@@ -145,15 +147,15 @@ export const GeneralSettings = (): JSX.Element => {
             value={formData.pinCategoriesByDefault ? 1 : 0}
             onChange={(e) => inputChangeHandler(e, { isBool: true })}
           >
-            <option value={1}>True</option>
-            <option value={0}>False</option>
+            <option value={1}>{t('common.true')}</option>
+            <option value={0}>{t('common.false')}</option>
           </select>
         </InputGroup>
 
         {/* BOOKMARKS OPPENING */}
         <InputGroup>
           <label htmlFor="bookmarksSameTab">
-            Open bookmarks in the same tab
+            {t('settings.general.bookmarksSameTab')}
           </label>
           <select
             id="bookmarksSameTab"
@@ -161,15 +163,15 @@ export const GeneralSettings = (): JSX.Element => {
             value={formData.bookmarksSameTab ? 1 : 0}
             onChange={(e) => inputChangeHandler(e, { isBool: true })}
           >
-            <option value={1}>True</option>
-            <option value={0}>False</option>
+            <option value={1}>{t('common.true')}</option>
+            <option value={0}>{t('common.false')}</option>
           </select>
         </InputGroup>
 
         {/* === SEARCH OPTIONS === */}
-        <SettingsHeadline text="Search" />
+        <SettingsHeadline text={t('settings.general.searchHeadline')} />
         <InputGroup>
-          <label htmlFor="defaultSearchProvider">Primary search provider</label>
+          <label htmlFor="defaultSearchProvider">{t('settings.general.primarySearchProvider')}</label>
           <select
             id="defaultSearchProvider"
             name="defaultSearchProvider"
@@ -191,7 +193,7 @@ export const GeneralSettings = (): JSX.Element => {
         {formData.defaultSearchProvider === 'l' && (
           <InputGroup>
             <label htmlFor="secondarySearchProvider">
-              Secondary search provider
+              {t('settings.general.secondarySearchProvider')}
             </label>
             <select
               id="secondarySearchProvider"
@@ -210,15 +212,14 @@ export const GeneralSettings = (): JSX.Element => {
               })}
             </select>
             <span>
-              Will be used when "Local search" is primary search provider and
-              there are not any local results
+              {t('settings.general.secondarySearchHint')}
             </span>
           </InputGroup>
         )}
 
         <InputGroup>
           <label htmlFor="searchSameTab">
-            Open search results in the same tab
+            {t('settings.general.searchSameTab')}
           </label>
           <select
             id="searchSameTab"
@@ -226,16 +227,16 @@ export const GeneralSettings = (): JSX.Element => {
             value={formData.searchSameTab ? 1 : 0}
             onChange={(e) => inputChangeHandler(e, { isBool: true })}
           >
-            <option value={1}>True</option>
-            <option value={0}>False</option>
+            <option value={1}>{t('common.true')}</option>
+            <option value={0}>{t('common.false')}</option>
           </select>
         </InputGroup>
 
-        <Button>Save changes</Button>
+        <Button>{t('common.save')}</Button>
       </form>
 
       {/* CUSTOM QUERIES */}
-      <SettingsHeadline text="Custom search providers" />
+      <SettingsHeadline text={t('settings.general.customSearchProviders')} />
       <CustomQueries />
     </Fragment>
   );

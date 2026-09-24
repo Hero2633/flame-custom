@@ -9,7 +9,7 @@ import { autoLogin, getConfig } from './store/action-creators';
 import { actionCreators, store } from './store';
 import { State } from './store/reducers';
 
-// Utils
+import i18n from './i18n';
 import { checkVersion, decodeToken, parsePABToTheme } from './utility';
 
 // Routes
@@ -44,8 +44,8 @@ export const App = (): JSX.Element => {
         if (now > expiresIn) {
           logout();
           createNotification({
-            title: 'Info',
-            message: 'Session expired. You have been logged out',
+            title: i18n.t('common.info'),
+            message: i18n.t('settings.auth.sessionExpired'),
           });
         }
       }
@@ -59,6 +59,10 @@ export const App = (): JSX.Element => {
       setTheme(parsePABToTheme(localStorage.theme));
     }
 
+    // Apply font scale if present
+    const savedScale = localStorage.fontScale || '1.15';
+    document.documentElement.style.setProperty('--font-scale', savedScale);
+
     // check for updated
     checkVersion();
 
@@ -70,8 +74,13 @@ export const App = (): JSX.Element => {
 
   // If there is no user theme, set the default one
   useEffect(() => {
-    if (!loading && !localStorage.theme) {
-      setTheme(parsePABToTheme(config.defaultTheme), false);
+    if (!loading) {
+      if (!localStorage.theme) {
+        setTheme(parsePABToTheme(config.defaultTheme), false);
+      }
+      if (config.fontScale) {
+        document.documentElement.style.setProperty('--font-scale', config.fontScale);
+      }
     }
   }, [loading]);
 

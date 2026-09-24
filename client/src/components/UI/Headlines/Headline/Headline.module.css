@@ -8,3 +8,25 @@
   margin-bottom: 20px;
   font-weight: 400;
 }
+
+.HeadlineSubtitle a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  color: var(--color-primary);
+  transition: all 0.25s;
+}
+
+.HeadlineSubtitle a:hover {
+  text-decoration: underline;
+  padding-left: 10px;
+}
+
+.BackIcon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

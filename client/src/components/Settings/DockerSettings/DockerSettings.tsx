@@ -1,4 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +17,7 @@ import { InputGroup, Button, SettingsHeadline } from '../../UI';
 import { inputHandler, dockerSettingsTemplate } from '../../../utility';
 
 export const DockerSettings = (): JSX.Element => {
+  const { t } = useTranslation();
   const { loading, config } = useSelector((state: State) => state.config);
 
   const dispatch = useDispatch();
@@ -56,10 +58,10 @@ export const DockerSettings = (): JSX.Element => {
 
   return (
     <form onSubmit={(e) => formSubmitHandler(e)}>
-      <SettingsHeadline text="Docker" />
+      <SettingsHeadline text={t('settings.docker.headline')} />
       {/* CUSTOM DOCKER SOCKET HOST */}
       <InputGroup>
-        <label htmlFor="dockerHost">Docker host</label>
+        <label htmlFor="dockerHost">{t('settings.docker.dockerHost')}</label>
         <input
           type="text"
           id="dockerHost"
@@ -72,22 +74,22 @@ export const DockerSettings = (): JSX.Element => {
 
       {/* USE DOCKER API */}
       <InputGroup>
-        <label htmlFor="dockerApps">Use Docker API</label>
+        <label htmlFor="dockerApps">{t('settings.docker.useDocker')}</label>
         <select
           id="dockerApps"
           name="dockerApps"
           value={formData.dockerApps ? 1 : 0}
           onChange={(e) => inputChangeHandler(e, { isBool: true })}
         >
-          <option value={1}>True</option>
-          <option value={0}>False</option>
+          <option value={1}>{t('common.true')}</option>
+          <option value={0}>{t('common.false')}</option>
         </select>
       </InputGroup>
 
       {/* UNPIN DOCKER APPS */}
       <InputGroup>
         <label htmlFor="unpinStoppedApps">
-          Unpin stopped containers / other apps
+          {t('settings.docker.unpinStopped')}
         </label>
         <select
           id="unpinStoppedApps"
@@ -95,28 +97,28 @@ export const DockerSettings = (): JSX.Element => {
           value={formData.unpinStoppedApps ? 1 : 0}
           onChange={(e) => inputChangeHandler(e, { isBool: true })}
         >
-          <option value={1}>True</option>
-          <option value={0}>False</option>
+          <option value={1}>{t('common.true')}</option>
+          <option value={0}>{t('common.false')}</option>
         </select>
       </InputGroup>
 
       {/* KUBERNETES SETTINGS */}
-      <SettingsHeadline text="Kubernetes" />
+      <SettingsHeadline text={t('settings.docker.kubernetesHeadline')} />
       {/* USE KUBERNETES */}
       <InputGroup>
-        <label htmlFor="kubernetesApps">Use Kubernetes Ingress API</label>
+        <label htmlFor="kubernetesApps">{t('settings.docker.useKubernetes')}</label>
         <select
           id="kubernetesApps"
           name="kubernetesApps"
           value={formData.kubernetesApps ? 1 : 0}
           onChange={(e) => inputChangeHandler(e, { isBool: true })}
         >
-          <option value={1}>True</option>
-          <option value={0}>False</option>
+          <option value={1}>{t('common.true')}</option>
+          <option value={0}>{t('common.false')}</option>
         </select>
       </InputGroup>
 
-      <Button>Save changes</Button>
+      <Button>{t('common.save')}</Button>
     </form>
   );
 };

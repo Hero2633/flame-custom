@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export const ThemeBuilder = ({ themes }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const {
     auth: { isAuthenticated },
     theme: { themeInEdit, userThemes },
@@ -73,7 +75,7 @@ export const ThemeBuilder = ({ themes }: Props): JSX.Element => {
               toggleShowModal(!showModal);
             }}
           >
-            Create new theme
+            {t('settings.themer.createTheme')}
           </Button>
 
           {themes.length ? (
@@ -83,7 +85,7 @@ export const ThemeBuilder = ({ themes }: Props): JSX.Element => {
                 toggleShowModal(!showModal);
               }}
             >
-              Edit user themes
+              {t('settings.themer.editTheme')}
             </Button>
           ) : (
             <></>

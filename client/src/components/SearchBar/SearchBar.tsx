@@ -1,4 +1,5 @@
 import { useRef, useEffect, KeyboardEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +23,7 @@ interface Props {
 }
 
 export const SearchBar = (props: Props): JSX.Element => {
+  const { t } = useTranslation();
   const { config, loading } = useSelector((state: State) => state.config);
 
   const dispatch = useDispatch();
@@ -82,8 +84,8 @@ export const SearchBar = (props: Props): JSX.Element => {
       if (!primarySearch.prefix) {
         // Prefix not found -> emit notification
         createNotification({
-          title: 'Error',
-          message: 'Prefix not found',
+          title: t('common.error'),
+          message: t('search.prefixNotFound'),
         });
       } else if (isURL) {
         // URL or IP passed -> redirect
@@ -123,6 +125,7 @@ export const SearchBar = (props: Props): JSX.Element => {
       <input
         ref={inputRef}
         type="text"
+        placeholder={t('search.placeholder')}
         className={classes.SearchBar}
         onKeyUp={(e) => searchHandler(e)}
         onDoubleClick={clearSearch}

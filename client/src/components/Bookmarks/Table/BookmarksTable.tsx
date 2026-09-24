@@ -5,6 +5,7 @@ import {
   Draggable,
   DropResult,
 } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,6 +26,7 @@ interface Props {
 }
 
 export const BookmarksTable = ({ openFormForUpdating }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const {
     bookmarks: { categoryInEdit },
     config: { config },
@@ -51,8 +53,8 @@ export const BookmarksTable = ({ openFormForUpdating }: Props): JSX.Element => {
   const dragEndHanlder = (result: DropResult): void => {
     if (config.useOrdering !== 'orderId') {
       createNotification({
-        title: 'Error',
-        message: 'Custom order is disabled',
+        title: t('common.error'),
+        message: t('bookmarks.customOrderDisabled'),
       });
       return;
     }
@@ -75,7 +77,9 @@ export const BookmarksTable = ({ openFormForUpdating }: Props): JSX.Element => {
   const deleteBookmarkHandler = (id: number, name: string) => {
     const categoryId = categoryInEdit?.id || -1;
 
-    const proceed = window.confirm(`Are you sure you want to delete ${name}?`);
+    const proceed = window.confirm(
+      t('bookmarks.deleteBookmarkConfirm', { name })
+    );
     if (proceed) {
       deleteBookmark(id, categoryId);
     }
@@ -106,12 +110,13 @@ export const BookmarksTable = ({ openFormForUpdating }: Props): JSX.Element => {
     <Fragment>
       {!categoryInEdit ? (
         <Message isPrimary={false}>
-          Switch to grid view and click on the name of category you want to edit
+          {t('bookmarks.switchToGridTip')}
         </Message>
       ) : (
         <Message isPrimary={false}>
-          Editing bookmarks from&nbsp;<span>{categoryInEdit.name}</span>
-          &nbsp;category
+          {t('bookmarks.editingFromCategory', {
+            category: categoryInEdit.name,
+          })}
         </Message>
       )}
 
@@ -121,12 +126,12 @@ export const BookmarksTable = ({ openFormForUpdating }: Props): JSX.Element => {
             {(provided) => (
               <Table
                 headers={[
-                  'Name',
-                  'URL',
-                  'Icon',
-                  'Visibility',
-                  'Category',
-                  'Actions',
+                  t('common.name'),
+                  t('common.url'),
+                  t('common.icon'),
+                  t('common.visibility'),
+                  t('bookmarks.bookmarkCategory'),
+                  t('common.actions'),
                 ]}
                 innerRef={provided.innerRef}
               >
@@ -157,7 +162,9 @@ export const BookmarksTable = ({ openFormForUpdating }: Props): JSX.Element => {
                             <td style={{ width: '200px' }}>{bookmark.url}</td>
                             <td style={{ width: '200px' }}>{bookmark.icon}</td>
                             <td style={{ width: '200px' }}>
-                              {bookmark.isPublic ? 'Visible' : 'Hidden'}
+                              {bookmark.isPublic
+                                ? t('common.visible')
+                                : t('common.hidden')}
                             </td>
                             <td style={{ width: '200px' }}>
                               {categoryInEdit.name}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,6 +29,7 @@ interface Props {
 }
 
 export const Apps = (props: Props): JSX.Element => {
+  const { t } = useTranslation();
   // Get Redux state
   const {
     apps: { apps, loading },
@@ -78,21 +80,25 @@ export const Apps = (props: Props): JSX.Element => {
       </Modal>
 
       <Headline
-        title="All Applications"
-        subtitle={<Link to="/">Go back</Link>}
+        title={t('apps.title')}
+        subtitle={<Link to="/">{t('common.goBack')}</Link>}
       />
 
       {isAuthenticated && (
         <div className={classes.ActionsContainer}>
           <ActionButton
-            name="Add"
+            name={t('common.add')}
             icon="mdiPlusBox"
             handler={() => {
               setEditApp(null);
               toggleModal();
             }}
           />
-          <ActionButton name="Edit" icon="mdiPencil" handler={toggleEdit} />
+          <ActionButton
+            name={t('common.edit')}
+            icon="mdiPencil"
+            handler={toggleEdit}
+          />
         </div>
       )}
 

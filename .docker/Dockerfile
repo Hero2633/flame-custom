@@ -11,7 +11,7 @@ COPY . .
 
 RUN mkdir -p ./public ./data \
     && cd ./client \
-    && npm install --production \
+    && npm install --production --legacy-peer-deps \
     && npm run build \
     && cd .. \
     && mv ./client/build/* ./public \

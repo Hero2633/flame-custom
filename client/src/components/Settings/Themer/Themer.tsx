@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +23,7 @@ import {
 } from '../../../utility';
 
 export const Themer = (): JSX.Element => {
+  const { t } = useTranslation();
   const {
     auth: { isAuthenticated },
     config: { loading, config },
@@ -66,23 +68,25 @@ export const Themer = (): JSX.Element => {
 
   const customThemesEl = (
     <Fragment>
-      <SettingsHeadline text="User themes" />
+      <SettingsHeadline text={t('settings.themer.userThemes')} />
       <ThemeBuilder themes={userThemes} />
     </Fragment>
   );
 
   return (
     <Fragment>
-      <SettingsHeadline text="App themes" />
+      <SettingsHeadline text={t('settings.themer.appThemes')} />
       {!themes.length ? <Spinner /> : <ThemeGrid themes={themes} />}
 
       {!userThemes.length ? isAuthenticated && customThemesEl : customThemesEl}
 
       {isAuthenticated && (
         <form onSubmit={formSubmitHandler}>
-          <SettingsHeadline text="Other settings" />
+          <SettingsHeadline text={t('settings.interface.miscHeadline')} />
           <InputGroup>
-            <label htmlFor="defaultTheme">Default theme for new users</label>
+            <label htmlFor="defaultTheme">
+              {t('settings.themer.defaultTheme')}
+            </label>
             <select
               id="defaultTheme"
               name="defaultTheme"
@@ -97,7 +101,7 @@ export const Themer = (): JSX.Element => {
             </select>
           </InputGroup>
 
-          <Button>Save changes</Button>
+          <Button>{t('common.save')}</Button>
         </form>
       )}
     </Fragment>

@@ -11,6 +11,7 @@ import { ActionType } from '../action-types';
 import { Theme, ApiResponse, ThemeColors } from '../../interfaces';
 import { applyAuth, parseThemeToPAB } from '../../utility';
 import axios, { AxiosError } from 'axios';
+import i18n from '../../i18n';
 
 export const setTheme =
   (colors: ThemeColors, remeberTheme: boolean = true) =>
@@ -58,8 +59,8 @@ export const addTheme =
       dispatch<any>({
         type: ActionType.createNotification,
         payload: {
-          title: 'Success',
-          message: 'Theme added',
+          title: i18n.t('common.success'),
+          message: i18n.t('settings.themer.themeAdded'),
         },
       });
     } catch (err) {
@@ -68,7 +69,7 @@ export const addTheme =
       dispatch<any>({
         type: ActionType.createNotification,
         payload: {
-          title: 'Error',
+          title: i18n.t('common.error'),
           message: error.response?.data.error,
         },
       });
@@ -91,8 +92,8 @@ export const deleteTheme =
       dispatch<any>({
         type: ActionType.createNotification,
         payload: {
-          title: 'Success',
-          message: 'Theme deleted',
+          title: i18n.t('common.success'),
+          message: i18n.t('settings.themer.themeDeleted'),
         },
       });
     } catch (err) {

@@ -2,6 +2,23 @@
   text-transform: uppercase;
   color: var(--color-primary);
   font-weight: 900;
-  font-size: 20px;
+  font-size: calc(22px * var(--font-scale, 1.15));
   margin-bottom: 16px;
+  display: inline-block;
+  cursor: pointer;
+  transform-origin: left center;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.SectionHeadline:hover {
+  text-decoration: underline;
+  transform: scale(0.95);
+}
+
+.SectionHeadline:active {
+  transform: scale(0.92);
 }

@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export const ThemeEditor = (props: Props): JSX.Element => {
+  const { t } = useTranslation();
   const {
     theme: { userThemes },
   } = useSelector((state: State) => state);
@@ -30,14 +32,14 @@ export const ThemeEditor = (props: Props): JSX.Element => {
   };
 
   const deleteHandler = (theme: Theme) => {
-    if (window.confirm(`Are you sure you want to delete this theme?`)) {
+    if (window.confirm(t('common.delete') + ` ${theme.name}?`)) {
       deleteTheme(theme.name);
     }
   };
 
   return (
     <ModalForm formHandler={() => {}} modalHandler={props.modalHandler}>
-      <CompactTable headers={['Name', 'Actions']}>
+      <CompactTable headers={[t('common.name'), t('common.actions')]}>
         {userThemes.map((t, idx) => (
           <Fragment key={idx}>
             <span>{t.name}</span>

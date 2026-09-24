@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export const QueriesForm = (props: Props): JSX.Element => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { addQuery, updateQuery } = bindActionCreators(
     actionCreators,
@@ -72,7 +74,7 @@ export const QueriesForm = (props: Props): JSX.Element => {
   return (
     <ModalForm modalHandler={modalHandler} formHandler={formHandler}>
       <InputGroup>
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">{t('common.name')}</label>
         <input
           type="text"
           name="name"
@@ -85,7 +87,7 @@ export const QueriesForm = (props: Props): JSX.Element => {
       </InputGroup>
 
       <InputGroup>
-        <label htmlFor="name">Prefix</label>
+        <label htmlFor="prefix">{t('search.prefix')}</label>
         <input
           type="text"
           name="prefix"
@@ -98,7 +100,7 @@ export const QueriesForm = (props: Props): JSX.Element => {
       </InputGroup>
 
       <InputGroup>
-        <label htmlFor="name">Query Template</label>
+        <label htmlFor="template">{t('search.queryUrl')}</label>
         <input
           type="text"
           name="template"
@@ -110,7 +112,11 @@ export const QueriesForm = (props: Props): JSX.Element => {
         />
       </InputGroup>
 
-      {query ? <Button>Update provider</Button> : <Button>Add provider</Button>}
+      {query ? (
+        <Button>{t('common.update')}</Button>
+      ) : (
+        <Button>{t('common.add')}</Button>
+      )}
     </ModalForm>
   );
 };

@@ -143,6 +143,87 @@
         "accent": "#50fbc2"
       },
       "isCustom": false
+    },
+    {
+      "name": "nordic",
+      "colors": {
+        "background": "#1E222A",
+        "primary": "#E5E9F0",
+        "accent": "#88C0D0"
+      },
+      "isCustom": false
+    },
+    {
+      "name": "mocha",
+      "colors": {
+        "background": "#1E1E2E",
+        "primary": "#CDD6F4",
+        "accent": "#89B4FA"
+      },
+      "isCustom": false
+    },
+    {
+      "name": "sage",
+      "colors": {
+        "background": "#1F2421",
+        "primary": "#E0E5DF",
+        "accent": "#81B29A"
+      },
+      "isCustom": false
+    },
+    {
+      "name": "obsidian",
+      "colors": {
+        "background": "#121417",
+        "primary": "#FFFFFF",
+        "accent": "#38BDF8"
+      },
+      "isCustom": false
+    },
+    {
+      "name": "cyber-night",
+      "colors": {
+        "background": "#1A1B26",
+        "primary": "#F0F4FC",
+        "accent": "#4ADE80"
+      },
+      "isCustom": false
+    },
+    {
+      "name": "amethyst",
+      "colors": {
+        "background": "#16161E",
+        "primary": "#E8ECF5",
+        "accent": "#A78BFA"
+      },
+      "isCustom": false
+    },
+    {
+      "name": "clarity",
+      "colors": {
+        "background": "#F4F6F9",
+        "primary": "#0F172A",
+        "accent": "#0284C7"
+      },
+      "isCustom": false
+    },
+    {
+      "name": "latte",
+      "colors": {
+        "background": "#EFF1F5",
+        "primary": "#2A2E42",
+        "accent": "#1D4ED8"
+      },
+      "isCustom": false
+    },
+    {
+      "name": "matcha",
+      "colors": {
+        "background": "#F2F6F3",
+        "primary": "#1B2E20",
+        "accent": "#047857"
+      },
+      "isCustom": false
     }
   ]
 }

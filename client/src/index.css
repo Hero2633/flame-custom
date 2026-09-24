@@ -34,6 +34,10 @@
     url('./assets/fonts/Roboto/roboto-v29-latin-700.woff') format('woff');
 }
 
+:root {
+  --font-scale: 1.15;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -49,7 +53,7 @@ body {
   background-color: var(--color-background);
   transition: background-color 0.3s;
   font-family: Roboto, sans-serif;
-  font-size: 14px;
+  font-size: calc(16px * var(--font-scale, 1.15));
 }
 
 a {
