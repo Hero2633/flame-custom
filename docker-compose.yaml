@@ -1,12 +1,14 @@
 services:
   flame:
-    image: flame:latest
+    image: flame-custom:2.4.3
     container_name: flame
     # 本地优先拉取策略：本地存在 flame:latest 镜像时优先使用本地镜像，仅当本地不存在时才从远端拉取
     pull_policy: missing
     environment:
       # 登录密码：优先读取环境变量 PASSWORD，未设置时默认使用 wnt8000LLy&y
       - PASSWORD=${PASSWORD:-wnt8000LLy&y}
+      # 数据库备份文件名需要该版本号；未设置会导致启动阶段退出
+      - VERSION=${VERSION:-2.4.2}
     volumes:
       # 数据持久化目录：挂载项目实际的 ./data 目录到容器内 /app/data，保存配置、SQLite数据库、图标及主题等
       - ./data:/app/data

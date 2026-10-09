@@ -35,38 +35,126 @@
   flex-direction: column;
 }
 
-.Bookmarks a {
-  line-height: 2.1;
+.BookmarkCardLink {
+  line-height: 1.4;
+  padding: 6px 4px;
+  margin-bottom: 6px;
+  border-radius: 4px;
   transition: all 0.25s;
   display: flex;
+  align-items: flex-start;
 }
 
-.BookmarkCard a:hover {
-  text-decoration: underline;
+.BookmarkCard a:hover,
+.BookmarkCardLink:hover {
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.05);
   padding-left: 10px;
 }
 
 .BookmarkIcon {
-  width: calc(20px * var(--font-scale, 1.15));
-  height: calc(20px * var(--font-scale, 1.15));
+  width: calc(24px * var(--font-scale, 1.15));
+  height: calc(24px * var(--font-scale, 1.15));
+  position: relative;
   display: flex;
-  margin-top: 5px;
-  margin-right: 4px;
+  margin-right: 10px;
+  margin-top: 2px;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .BookmarkIconSvg {
-  width: 85%;
-  height: 85%;
-  margin-top: 2px;
-  margin-left: 2px;
+  width: 90%;
+  height: 90%;
   object-fit: contain;
 }
 
 .CustomIcon {
   width: 90%;
   height: 90%;
-  margin-top: 2px;
   object-fit: contain;
+}
+
+.LetterAvatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.7em;
+  font-weight: 700;
+  text-transform: uppercase;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.FaviconImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+}
+
+.FaviconImgVisible {
+  opacity: 1;
+}
+
+.BookmarkCardDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.BookmarkName {
+  font-size: 1em;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.BookmarkCardLink:hover .BookmarkName {
+  text-decoration: underline;
+}
+
+.BookmarkSecretRow {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 3px;
+}
+
+.SecretText {
+  color: var(--color-accent);
+  font-size: 0.85em;
+  font-family: inherit;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.EyeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  opacity: 0.75;
+  margin-top: 2px;
+  flex-shrink: 0;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.EyeButton:hover {
+  opacity: 1;
+  transform: scale(1.15);
 }

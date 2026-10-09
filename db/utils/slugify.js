@@ -1,5 +1,12 @@
+const packageVersion = require('../../package.json').version;
+
 const slugify = () => {
-  const version = process.env.VERSION;
+  const configuredVersion = process.env.VERSION;
+  const version =
+    typeof configuredVersion === 'string' &&
+    /^\d+(?:\.\d+)*$/.test(configuredVersion)
+      ? configuredVersion
+      : packageVersion;
   const slug = `db-${version.replace(/\./g, '')}-backup.sqlite`;
   return slug;
 };

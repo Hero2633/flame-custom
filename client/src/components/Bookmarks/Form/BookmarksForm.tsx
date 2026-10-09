@@ -35,9 +35,6 @@ export const BookmarksForm = ({
   const { addBookmark, updateBookmark, createNotification } =
     bindActionCreators(actionCreators, dispatch);
 
-  const [useCustomIcon, toggleUseCustomIcon] = useState<boolean>(false);
-  const [customIcon, setCustomIcon] = useState<File | null>(null);
-
   const [formData, setFormData] = useState<NewBookmark>(newBookmarkTemplate);
 
   // Load bookmark data if provided for editing
@@ -50,7 +47,7 @@ export const BookmarksForm = ({
   }, [bookmark]);
 
   const inputChangeHandler = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
     options?: { isNumber?: boolean; isBool?: boolean }
   ) => {
     inputHandler<NewBookmark>({
@@ -61,17 +58,11 @@ export const BookmarksForm = ({
     });
   };
 
-  const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
-    if (e.target.files) {
-      setCustomIcon(e.target.files[0]);
-    }
-  };
-
   // Bookmarks form handler
   const formSubmitHandler = (e: FormEvent): void => {
     e.preventDefault();
 
-    for (let field of ['name', 'url', 'icon'] as const) {
+    for (let field of ['name', 'url'] as const) {
       if (/^ +$/.test(formData[field])) {
         createNotification({
           title: t('common.error'),
@@ -82,51 +73,18 @@ export const BookmarksForm = ({
       }
     }
 
-    const createFormData = (): FormData => {
-      const data = new FormData();
-      if (customIcon) {
-        data.append('icon', customIcon);
-      }
-      data.append('name', formData.name);
-      data.append('url', formData.url);
-      data.append('categoryId', `${formData.categoryId}`);
-      data.append('isPublic', `${formData.isPublic ? 1 : 0}`);
+    if (formData.categoryId < 0) {
+      createNotification({
+        title: t('common.error'),
+        message: t('bookmarks.selectCategoryError'),
+      });
 
-      return data;
-    };
-
-    const checkCategory = (): boolean => {
-      if (formData.categoryId < 0) {
-        createNotification({
-          title: t('common.error'),
-          message: t('bookmarks.selectCategoryError'),
-        });
-
-        return false;
-      }
-
-      return true;
-    };
+      return;
+    }
 
     if (!bookmark) {
       // add new bookmark
-      if (!checkCategory()) return;
-
-      if (formData.categoryId < 0) {
-        createNotification({
-          title: t('common.error'),
-          message: t('bookmarks.selectCategoryError'),
-        });
-        return;
-      }
-
-      if (customIcon) {
-        const data = createFormData();
-        addBookmark(data);
-      } else {
-        addBookmark(formData);
-      }
-
+      addBookmark(formData);
       setFormData({
         ...newBookmarkTemplate,
         categoryId: formData.categoryId,
@@ -134,26 +92,14 @@ export const BookmarksForm = ({
       });
     } else {
       // update
-      if (!checkCategory()) return;
-
-      if (customIcon) {
-        const data = createFormData();
-        updateBookmark(bookmark.id, data, {
-          prev: bookmark.categoryId,
-          curr: formData.categoryId,
-        });
-      } else {
-        updateBookmark(bookmark.id, formData, {
-          prev: bookmark.categoryId,
-          curr: formData.categoryId,
-        });
-      }
-
+      updateBookmark(bookmark.id, formData, {
+        prev: bookmark.categoryId,
+        curr: formData.categoryId,
+      });
       modalHandler();
     }
 
     setFormData({ ...newBookmarkTemplate, categoryId: formData.categoryId });
-    setCustomIcon(null);
   };
 
   return (
@@ -207,55 +153,20 @@ export const BookmarksForm = ({
         </select>
       </InputGroup>
 
-      {/* ICON */}
-      {!useCustomIcon ? (
-        // mdi
-        <InputGroup>
-          <label htmlFor="icon">{t('apps.appIcon')}</label>
-          <input
-            type="text"
-            name="icon"
-            id="icon"
-            placeholder="book-open-outline"
-            value={formData.icon}
-            onChange={(e) => inputChangeHandler(e)}
-          />
-          <span>
-            {t('apps.iconReference')}
-            <a href="https://materialdesignicons.com/" target="blank">
-              {' '}
-              {t('apps.clickReference')}
-            </a>
-          </span>
-          <span
-            onClick={() => toggleUseCustomIcon(!useCustomIcon)}
-            className={classes.Switch}
-          >
-            {t('apps.switchToUpload')}
-          </span>
-        </InputGroup>
-      ) : (
-        // custom
-        <InputGroup>
-          <label htmlFor="icon">{t('apps.appIcon')}</label>
-          <input
-            type="file"
-            name="icon"
-            id="icon"
-            onChange={(e) => fileChangeHandler(e)}
-            accept=".jpg,.jpeg,.png,.svg,.ico"
-          />
-          <span
-            onClick={() => {
-              setCustomIcon(null);
-              toggleUseCustomIcon(!useCustomIcon);
-            }}
-            className={classes.Switch}
-          >
-            {t('apps.switchToMDI')}
-          </span>
-        </InputGroup>
-      )}
+      {/* DESCRIPTION / NOTES */}
+      <InputGroup>
+        <label htmlFor="description">{t('bookmarks.bookmarkDescription')}</label>
+        <textarea
+          name="description"
+          id="description"
+          className={classes.Textarea}
+          placeholder="账号/密码/私密备忘等 (支持回车多行输入，选填)"
+          rows={3}
+          value={formData.description || ''}
+          onChange={(e) => inputChangeHandler(e)}
+        />
+        <span>{t('bookmarks.bookmarkDescriptionHint')}</span>
+      </InputGroup>
 
       {/* VISIBILTY */}
       <InputGroup>

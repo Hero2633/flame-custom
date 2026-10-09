@@ -5,3 +5,12 @@
 .Switch:hover {
   cursor: pointer;
 }
+
+.Textarea {
+  height: auto !important;
+  min-height: 80px;
+  resize: vertical !important;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+}

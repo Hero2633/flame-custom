@@ -19,7 +19,12 @@ RUN mkdir -p ./public ./data \
 
 FROM node:20-alpine
 
+RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont su-exec
+
 COPY --from=builder /app /app
+
+COPY .docker/chromium.sh /usr/local/bin/flame-chromium
+RUN chmod 755 /usr/local/bin/flame-chromium
 
 WORKDIR /app
 
@@ -27,5 +32,6 @@ EXPOSE 5005
 
 ENV NODE_ENV=production
 ENV PASSWORD=flame_password
+ENV FAVICON_CHROMIUM_PATH=/usr/local/bin/flame-chromium
 
 CMD ["sh", "-c", "chown -R node /app/data && node server.js"]

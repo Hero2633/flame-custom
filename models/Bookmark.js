@@ -30,6 +30,11 @@ const Bookmark = sequelize.define(
       allowNull: true,
       defaultValue: null,
     },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: '',
+    },
   },
   {
     tableName: 'bookmarks',

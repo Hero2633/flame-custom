@@ -125,7 +125,9 @@
     "bookmarkUpdated": "书签已更新",
     "bookmarkDeleted": "书签已删除",
     "pinSuccess": "分类已固定",
-    "unpinSuccess": "分类已取消固定"
+    "unpinSuccess": "分类已取消固定",
+    "bookmarkDescription": "备注信息 (可选私密信息)",
+    "bookmarkDescriptionHint": "选填 - 默认为您遮蔽，可点击小眼睛查看"
   },
   "settings": {
     "title": "系统设置",

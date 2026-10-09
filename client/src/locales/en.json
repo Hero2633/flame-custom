@@ -125,7 +125,9 @@
     "bookmarkUpdated": "Bookmark updated",
     "bookmarkDeleted": "Bookmark deleted",
     "pinSuccess": "Category pinned",
-    "unpinSuccess": "Category unpinned"
+    "unpinSuccess": "Category unpinned",
+    "bookmarkDescription": "Notes / Description (Optional)",
+    "bookmarkDescriptionHint": "Hidden by default, click eye icon to view"
   },
   "settings": {
     "title": "Settings",
